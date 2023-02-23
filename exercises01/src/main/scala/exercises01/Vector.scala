@@ -19,10 +19,12 @@ class Vector(val x: Double, val y: Double) {
   }
 
   override def equals(other: Any): Boolean = {
+    if (!other.isInstanceOf[Vector]) return false;
     val vector = other.asInstanceOf[Vector]
     this.x == vector.x && this.y == vector.y;
   }
 
+  // Vector(x, y)
   override def toString: String = "Vector(" + this.x.toString + ", " + this.y.toString + ")"
 
 }
