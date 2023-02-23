@@ -5,7 +5,7 @@ import scala.math.sqrt
 class Vector(val x: Double, val y: Double) {
   def +(other: Vector): Vector = new Vector(other.x + this.x, other.y + this.y)
 
-  def -(other: Vector): Vector = new Vector(this.x - other.x, this.y - other.y)
+  def -(other: Vector): Vector = this + -other
 
   def *(scalar: Double): Vector = new Vector(this.x * scalar, this.y * scalar)
 
