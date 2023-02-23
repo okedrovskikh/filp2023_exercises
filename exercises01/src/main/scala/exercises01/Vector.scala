@@ -24,7 +24,6 @@ class Vector(val x: Double, val y: Double) {
     this.x == vector.x && this.y == vector.y;
   }
 
-  // Vector(x, y)
   override def toString: String = "Vector(" + this.x.toString + ", " + this.y.toString + ")"
 
 }
