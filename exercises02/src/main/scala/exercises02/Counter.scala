@@ -10,7 +10,8 @@ object Counter {
     * Посчитать количество вхождений слов в тексте
     * слово отделено символами [\s.,!?:\n\t\r]
     */
-  def countWords(text: String): Map[String, Int] = splitAndFilterAndCollectToMap(text, wordsSplitter, word => !word.isBlank)
+  def countWords(text: String): Map[String, Int] =
+    splitAndFilterAndCollectToMap(text, wordsSplitter, word => !word.isBlank)
 
   /**
     * Посчитать количество вхождений английских слов в тексте
