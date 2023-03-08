@@ -31,5 +31,5 @@ object Counter {
     text
       .split(splitter)
       .filter(filter)
-      .groupMapReduce(_.toLowerCase)(_ => 1)(_ + _)
+      .groupMapReduce(identity)(_ => 1)(_ + _)
 }
