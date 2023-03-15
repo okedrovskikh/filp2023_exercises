@@ -15,13 +15,13 @@ object MyList {
 
   @tailrec
   private def summaryList(a: MyList[Int], acc: Int = 0): Int = a match {
-    case Nil => acc
+    case Nil                                => acc
     case Cons(head: Int, tail: MyList[Int]) => summaryList(tail, acc + head)
   }
 
   @tailrec
   private def reversedList[A](a: MyList[A], acc: MyList[A]): MyList[A] = a match {
-    case Nil => acc
+    case Nil                            => acc
     case Cons(head: A, tail: MyList[A]) => reversedList(tail, Cons(head, acc))
   }
 }
