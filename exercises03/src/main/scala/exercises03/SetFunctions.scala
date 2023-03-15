@@ -9,7 +9,7 @@ object SetFunctions {
 
   def union[A](s: Set[A], t: Set[A]): Set[A] = i => s(i) || t(i)
 
-  def intersect[A](s: Set[A], t: Set[A]): Set[A] = i => s(i) && s(i)
+  def intersect[A](s: Set[A], t: Set[A]): Set[A] = i => s(i) && t(i)
 
   def diff[A](s: Set[A], t: Set[A]): Set[A] = i => s(i) && !t(i)
 
