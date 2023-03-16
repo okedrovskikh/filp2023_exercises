@@ -4,9 +4,9 @@ object Game {
   def parseState(input: String, number: Int): State = {
     if (input.forall(_.isDigit)) {
       input.toIntOption match {
-        case x if x.get < number => NumberIsBigger
-        case x if x.get > number => NumberIsSmaller
-        case _                   => Guessed
+        case Some(x) if x < number => NumberIsBigger
+        case Some(x) if x > number => NumberIsSmaller
+        case _                     => Guessed
       }
     } else {
       input match {
