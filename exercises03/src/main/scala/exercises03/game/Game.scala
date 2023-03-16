@@ -3,9 +3,9 @@ package exercises03.game
 object Game {
   def parseState(input: String, number: Int): State = {
     if (input.forall(_.isDigit)) {
-      input.toInt match {
-        case x if x < number => NumberIsBigger
-        case x if x > number => NumberIsSmaller
+      input.toIntOption match {
+        case x if x.get < number => NumberIsBigger
+        case x if x.get > number => NumberIsSmaller
         case _               => Guessed
       }
     } else {
@@ -17,12 +17,12 @@ object Game {
   }
 
   def action(state: State, number: Int): GameController => Unit = state match {
-    case GiveUp          => controller => controller.giveUp(number)
-    case Guessed         => controller => controller.guessed()
-    case NumberIsBigger  => controller => controller.numberIsBigger()
-    case NumberIsSmaller => controller => controller.numberIsSmaller()
-    case WrongInput      => controller => controller.wrongInput()
-    case _               => controller => controller.nextLine()
+    case GiveUp          => _.giveUp(number)
+    case Guessed         => _.guessed()
+    case NumberIsBigger  => _.numberIsBigger()
+    case NumberIsSmaller => _.numberIsSmaller()
+    case WrongInput      => _.wrongInput()
+    case _               => _.nextLine()
   }
 
   def completed(state: State): Boolean =
