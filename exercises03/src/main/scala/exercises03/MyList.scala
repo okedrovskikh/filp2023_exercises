@@ -21,7 +21,7 @@ object MyList {
   def reverse[A](list: MyList[A]): MyList[A] = {
     @tailrec
     def reversedList[B](a: MyList[B], acc: MyList[B]): MyList[B] = a match {
-      case Nil => acc
+      case Nil                            => acc
       case Cons(head: B, tail: MyList[B]) => reversedList(tail, Cons(head, acc))
     }
     reversedList(list, Nil)

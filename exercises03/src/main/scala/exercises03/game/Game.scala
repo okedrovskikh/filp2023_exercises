@@ -6,7 +6,7 @@ object Game {
       input.toIntOption match {
         case x if x.get < number => NumberIsBigger
         case x if x.get > number => NumberIsSmaller
-        case _               => Guessed
+        case _                   => Guessed
       }
     } else {
       input match {
