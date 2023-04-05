@@ -42,4 +42,3 @@ object Examples {
   List(true) === List(true) // возвращает true
   List(true) eqv List(true) // возвращает true
 }
-
