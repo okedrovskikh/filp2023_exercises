@@ -17,13 +17,7 @@ object Examples {
     * используйте for-comprehension
     */
   def transformToOption(rawUser: RawUser): Option[User] =
-    for {
-      firstName  <- rawUser.firstName
-      secondName <- rawUser.secondName
-      passport   <- transformToOptionPassport(rawUser.passport)
-      id         <- rawUser.id.toLongOption
-      if !rawUser.banned
-    } yield User(id, UserName(firstName, secondName, rawUser.thirdName), passport)
+    transformToEither(rawUser).toOption
 
   private def transformToOptionPassport(passport: Option[String]): Option[Option[Passport]] =
     passport match {

@@ -30,6 +30,12 @@ object EitherCombinators {
       case Left(x)  => Left(x)
       case Right(x) => f(x)
     }
+
+    def toOption: Option[B] =
+      this match {
+        case Left(_)  => None
+        case Right(x) => Option(Right(x).get)
+      }
   }
 
   case class Left[+A, +B](get: A) extends Either[A, B]
