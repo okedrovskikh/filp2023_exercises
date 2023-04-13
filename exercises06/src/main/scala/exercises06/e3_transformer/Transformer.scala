@@ -11,11 +11,7 @@ trait Transformer[A, B] {
 object TransformerInstances {
   implicit val transformer: Transformer[RawUser, User] = new Transformer[RawUser, User] {
     override def toOption(a: RawUser): Option[User] =
-      for {
-        firstName  <- a.firstName
-        secondName <- a.secondName
-        id         <- a.id.toLongOption
-      } yield User(id, UserName(firstName, secondName, a.thirdName))
+      toEither(a).toOption
 
     override def toEither(a: RawUser): Either[Error, User] =
       for {

@@ -5,21 +5,21 @@ trait Eq[A] {
 }
 
 object EqInstances {
-  implicit val intEq: Eq[Int] = (a: Int, b: Int) => a == b
+  implicit val intEq: Eq[Int] = _ == _
 
-  implicit val stringEq: Eq[String] = (a: String, b: String) => a == b
+  implicit val stringEq: Eq[String] = _ == _
 
-  implicit val boolEq: Eq[Boolean] = (a: Boolean, b: Boolean) => a == b
+  implicit val boolEq: Eq[Boolean] = _ == _
 
   implicit def optionEq[A](implicit base: Eq[A]): Eq[Option[A]] =
-    (a: Option[A], b: Option[A]) =>
+    (a, b) =>
       (a, b) match {
         case (None, None)       => true
         case (Some(x), Some(y)) => base.eqv(x, y)
         case _                  => false
       }
 
-  implicit def listEq[A](implicit base: Eq[A]): Eq[List[A]] = (a: List[A], b: List[A]) => a.corresponds(b)(base.eqv)
+  implicit def listEq[A](implicit base: Eq[A]): Eq[List[A]] = (a, b) => a.corresponds(b)(base.eqv)
 }
 
 object EqSyntax {
