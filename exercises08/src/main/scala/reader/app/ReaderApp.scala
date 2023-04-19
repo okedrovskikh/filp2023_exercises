@@ -48,10 +48,24 @@ object ReaderApp extends App {
   }
 
   object ReaderService {
-    def transact(currency: Currency, good: Good): Reader[Exchanges, Transaction] = ???
+    def transact(currency: Currency, good: Good): Reader[Exchanges, Transaction] =
+      Reader.ask(e => Transaction(currency, good.price * e(good.currency, currency)))
 
-    def aggregate(currency: Currency, transactions: NonEmptyList[Transaction]): Reader[Exchanges, Transaction] = ???
+    def aggregate(currency: Currency, transactions: NonEmptyList[Transaction]): Reader[Exchanges, Transaction] =
+      Reader.ask(e =>
+        transactions.map(t => Transaction(currency, t.price * e(t.currency, currency))).reduce { (acc, cur) =>
+          acc.copy(price = acc.price + cur.price)
+        }
+      )
 
-    def buyAll(wallet: Wallet): Reader[Exchanges, Wallet] = ???
+    def buyAll(wallet: Wallet): Reader[Exchanges, Wallet] =
+      for {
+        transact1 <- transact(Euro, Good(Dollar, 1))
+        transact2 <- transact(Yen, Good(Dollar, 2))
+        transact3 <- transact(Ruble, Good(Dollar, 3))
+        transact4 <- transact(Dollar, Good(Dollar, 4))
+        all       <- aggregate(wallet.currency, NonEmptyList.of(transact1, transact2, transact3, transact4))
+      } yield wallet.copy(amount = wallet.amount - all.price)
   }
+
 }
