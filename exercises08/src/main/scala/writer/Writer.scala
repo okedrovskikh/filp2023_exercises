@@ -19,4 +19,3 @@ object Writer {
 
   def tell[Log](log: Log): Writer[Log, Unit] = Writer[Log, Unit](log, ())
 }
-
