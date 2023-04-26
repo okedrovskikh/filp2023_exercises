@@ -24,8 +24,7 @@ import scala.concurrent.Future
   * CompetitionMethods.unlikeAll
   * CompetitionMethods.topAuthor
   */
-class IOCompetition(service: TwitterService[IO], methods: CompetitionMethods[IO])
-    extends Competition[IO] {
+class IOCompetition(service: TwitterService[IO], methods: CompetitionMethods[IO]) extends Competition[IO] {
   def winner(users: List[User], followers: Map[User, List[User]], botUser: User): IO[User] =
     for {
       tweetIds <- users.parTraverse(user =>
