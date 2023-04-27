@@ -77,3 +77,9 @@ lazy val lection09 = project in file("lection09") settings (
       "org.typelevel" %% "cats-effect-testing-scalatest" % "1.5.0" % Test +:
       libraries
 )
+lazy val lection10 = project in file("lection10") settings {
+  libraryDependencies ++= libraries :+ ("org.typelevel" %% "cats-effect" % "2.4.1")
+} settings {
+  scalacOptions ++= Seq("-feature", "-language:implicitConversions", "-Xfatal-warnings", "-language:postfixOps")
+  addCompilerPlugin(kindProjectorDep)
+}
