@@ -2,7 +2,7 @@ package exercises07.ex02
 
 import exercises07.data.NonEmptyList
 import exercises07.ex02.Domain._
-import exercises07.ex02.Errors.ParsingError
+import exercises07.ex02.Errors.{InvalidAddressBookId, InvalidPersonId, InvalidPhone, MissingPersonName, ParsingError}
 import exercises07.typeclasses._
 
 object Exercise02 {
@@ -23,12 +23,24 @@ object Exercise02 {
   }
 
   // Советуем воспользоваться)
+
   import TupleSyntax._
   import TransformerSyntax._
   import exercises07.ex01.Exercise01.Syntax._
   import exercises07.ex01.Exercise01.Instances._
 
-  implicit def personTransformerF[F[_]: TransformationSupport]: TransformerF[F, RawPerson, Person] = ???
+  implicit def personTransformerF[F[_]: TransformationSupport]: TransformerF[F, RawPerson, Person] =
+    from =>
+      (
+        from.id.toLongOption.require(InvalidPersonId(from.id)),
+        from.name.require(MissingPersonName),
+        Phone.parse(from.phone).require(InvalidPhone(from.phone))
+      ).mapN(Person)
 
-  implicit def addressBookTransformerF[F[_]: TransformationSupport]: TransformerF[F, RawAddressBook, AddressBook] = ???
+  implicit def addressBookTransformerF[F[_]: TransformationSupport]: TransformerF[F, RawAddressBook, AddressBook] =
+    from =>
+      (
+        from.id.toLongOption.require(InvalidAddressBookId(from.id)),
+        from.persons.traverse(_.transformF)
+      ).mapN(AddressBook)
 }
